@@ -1,11 +1,30 @@
-const { Car } = require("../models");
+const { Car, User } = require("../models");
 const ApiError = require("../utils/ApiError");
 const imagekit = require("../services/imagekit");
 const { Op } = require("sequelize");
 
 const getAllCar = async (req, res, next) => {
   try {
-    const cars = await Car.findAll();
+    const cars = await Car.findAll({
+      include: [
+        {
+          model: User,
+          as: "createdByUser",
+          attributes: ["id", "name", "role"],
+        },
+
+        {
+          model: User,
+          as: "deletedByUser",
+          attributes: ["id", "name", "role"],
+        },
+        {
+          model: User,
+          as: "updatedByUser",
+          attributes: ["id", "name", "role"],
+        },
+      ],
+    });
 
     return res.status(200).json({
       status: "Success",
@@ -25,6 +44,25 @@ const getCarById = async (req, res, next) => {
       where: {
         id,
       },
+      include: [
+        {
+          model: User,
+          as: "createdByUser",
+          attributes: ["id", "name", "role"],
+        },
+
+        {
+          model: User,
+          as: "deletedByUser",
+          attributes: ["id", "name", "role"],
+        },
+
+        {
+          model: User,
+          as: "updatedByUser",
+          attributes: ["id", "name", "role"],
+        },
+      ],
     });
 
     if (!car) {
@@ -47,7 +85,7 @@ const createCar = async (req, res, next) => {
   try {
     const file = (await req.file) || null;
     // Create by nanti ganti jwt
-    const { type, model, manufacture, price, createdBy } = req.body;
+    const { type, model, manufacture, price } = req.body;
     let newCar;
 
     if (!type || !model || !manufacture || !price || !file) {
@@ -74,7 +112,7 @@ const createCar = async (req, res, next) => {
         model,
         manufacture,
         price,
-        createdBy,
+        createdBy: req.user.id,
         image: img.url,
       });
     } else {
@@ -83,7 +121,7 @@ const createCar = async (req, res, next) => {
         model,
         manufacture,
         price,
-        createdBy,
+        createdBy: req.user.id,
       });
     }
 
@@ -113,8 +151,7 @@ const deleteCar = async (req, res, next) => {
       return;
     }
 
-    // Diganti kalo udah ada jwt
-    const deletedBy = 1;
+    const deletedBy = req.user.id;
 
     await Car.update(
       {
@@ -150,7 +187,7 @@ const updateCar = async (req, res, next) => {
     const id = req.params.id;
 
     // Last update by nanti ganti jwt
-    const { type, model, manufacture, price, lastUpdatedBy } = req.body;
+    const { type, model, manufacture, price } = req.body;
 
     console.log(file);
 
@@ -180,7 +217,7 @@ const updateCar = async (req, res, next) => {
           model,
           manufacture,
           price,
-          lastUpdatedBy,
+          lastUpdatedBy: req.user.id,
           image: img.url,
         },
         {
@@ -196,7 +233,7 @@ const updateCar = async (req, res, next) => {
           model,
           manufacture,
           price,
-          lastUpdatedBy,
+          lastUpdatedBy: req.user.id,
         },
         {
           where: {

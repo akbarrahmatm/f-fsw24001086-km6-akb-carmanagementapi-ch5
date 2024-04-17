@@ -9,6 +9,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Car.belongsTo(models.User, {
+        as: "createdByUser",
+        foreignKey: {
+          name: "createdBy",
+          allowNull: false,
+        },
+      });
+      Car.belongsTo(models.User, {
+        as: "updatedByUser",
+        foreignKey: {
+          name: "lastUpdatedBy",
+          allowNull: false,
+        },
+      });
+      Car.belongsTo(models.User, {
+        as: "deletedByUser",
+        foreignKey: {
+          name: "deletedBy",
+          allowNull: false,
+        },
+      });
     }
   }
   Car.init(
