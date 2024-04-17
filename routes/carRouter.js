@@ -11,6 +11,7 @@ router
 router
   .route("/:id")
   .get(carController.getCarById)
-  .delete(carController.deleteCar);
+  .delete(carController.deleteCar)
+  .patch(upload.single("image"), carController.updateCar);
 
 module.exports = router;

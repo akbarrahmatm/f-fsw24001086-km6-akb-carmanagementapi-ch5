@@ -45,14 +45,13 @@ const getCarById = async (req, res, next) => {
 const createCar = async (req, res, next) => {
   try {
     const file = (await req.file) || null;
+    // Create by nanti ganti jwt
     const { type, model, manufacture, price, createdBy } = req.body;
     let newCar;
 
     if (file !== null) {
       const split = file.originalname.split(".");
       const extension = split[split.length - 1];
-
-      console.log("gaada");
 
       const img = await imagekit.upload({
         file: file.buffer,
@@ -99,7 +98,7 @@ const deleteCar = async (req, res, next) => {
     });
 
     if (!car) {
-      next(new ApiError(`Data with id '${id}' is not found`, 400));
+      next(new ApiError(`Data with id '${id}' is not found`, 404));
       return;
     }
 
@@ -133,9 +132,89 @@ const deleteCar = async (req, res, next) => {
   }
 };
 
+const updateCar = async (req, res, next) => {
+  try {
+    const file = (await req.file) || null;
+
+    const id = req.params.id;
+
+    // Last update by nanti ganti jwt
+    const { type, model, manufacture, price, lastUpdatedBy } = req.body;
+
+    console.log(file);
+
+    const car = await Car.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!car) {
+      next(new ApiError(`Data with id '${id}' is not found`, 404));
+      return;
+    }
+
+    if (file !== null) {
+      const split = file.originalname.split(".");
+      const extension = split[split.length - 1];
+
+      const img = await imagekit.upload({
+        file: file.buffer,
+        fileName: `IMG-${Date.now()}.${extension}`,
+      });
+
+      await Car.update(
+        {
+          type,
+          model,
+          manufacture,
+          price,
+          lastUpdatedBy,
+          image: img.url,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+    } else {
+      await Car.update(
+        {
+          type,
+          model,
+          manufacture,
+          price,
+          lastUpdatedBy,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+    }
+
+    const updatedCar = await Car.findOne({
+      where: {
+        id,
+      },
+    });
+
+    res.status(200).json({
+      status: "Success",
+      data: updatedCar,
+    });
+  } catch (err) {
+    next(new ApiError(err.message, 400));
+    return;
+  }
+};
+
 module.exports = {
   getAllCar,
   getCarById,
   createCar,
   deleteCar,
+  updateCar,
 };
