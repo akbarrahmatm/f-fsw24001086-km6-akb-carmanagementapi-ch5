@@ -1,6 +1,7 @@
 const { Car } = require("../models");
 const ApiError = require("../utils/ApiError");
 const imagekit = require("../services/imagekit");
+const { Op } = require("sequelize");
 
 const getAllCar = async (req, res, next) => {
   try {
@@ -48,6 +49,16 @@ const createCar = async (req, res, next) => {
     // Create by nanti ganti jwt
     const { type, model, manufacture, price, createdBy } = req.body;
     let newCar;
+
+    if (!type || !model || !manufacture || !price || !file) {
+      next(
+        new ApiError(
+          "type, model, manufacture, price, and image is required",
+          400
+        )
+      );
+      return;
+    }
 
     if (file !== null) {
       const split = file.originalname.split(".");
