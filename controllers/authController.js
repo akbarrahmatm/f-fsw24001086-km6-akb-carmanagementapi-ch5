@@ -125,7 +125,22 @@ const login = async (req, res, next) => {
   }
 };
 
+const userCheck = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      status: "Success",
+      data: {
+        user: req.user,
+      },
+    });
+  } catch (err) {
+    next(new ApiError(err.message, 500));
+    return;
+  }
+};
+
 module.exports = {
   register,
   login,
+  userCheck,
 };
