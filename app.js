@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 
+const errorController = require("./controllers/errorController");
 const router = require("./routes");
 
 const app = express();
@@ -18,5 +19,8 @@ app.use((req, res, next) => {
 });
 
 app.use(router);
+
+app.use(errorController.onLost);
+app.use(errorController.onError);
 
 module.exports = app;
