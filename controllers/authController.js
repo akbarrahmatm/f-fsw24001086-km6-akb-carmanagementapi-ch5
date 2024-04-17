@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { Auth, User } = require("../models");
 const ApiError = require("../utils/ApiError");
 const jwt = require("jsonwebtoken");
@@ -83,6 +85,47 @@ const register = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await Auth.findOne({
+      where: {
+        email,
+      },
+      include: ["User"],
+    });
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign(
+        {
+          id: user.userId,
+          email: user.email,
+          name: user.User.name,
+          role: user.User.role,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: process.env.JWT_EXPIRES,
+        }
+      );
+
+      res.status(200).json({
+        status: "Success",
+        message: "Token successfully created",
+        data: token,
+      });
+    } else {
+      next(new ApiError(" Wrong Email Or Password", 400));
+      return;
+    }
+  } catch (err) {
+    next(new ApiError(err.message, 400));
+    return;
+  }
+};
+
 module.exports = {
   register,
+  login,
 };
