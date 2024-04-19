@@ -37,20 +37,19 @@ const register = async (req, res, next) => {
       },
     });
     if (isEmailExist) {
-      next(new ApiError("Email is already taken", 400));
+      next(new ApiError("Email is already taken", 409));
       return;
     }
 
     // Check password length
-    const passwordLength = password <= 8;
-    if (passwordLength) {
-      next(new ApiError("Password should be 8 character or more", 400));
+    if (password >= 8) {
+      next(new ApiError("Password should be 8 character or more", 422));
       return;
     }
 
     // Check password & passwordConfirm
     if (password !== confirmPassword) {
-      next(new ApiError("password & confirmPassword does not match", 400));
+      next(new ApiError("password & confirmPassword does not match", 401));
       return;
     }
 
@@ -89,6 +88,11 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      next(new ApiError("email & password is required", 400));
+      return;
+    }
+
     const user = await Auth.findOne({
       where: {
         email,
@@ -116,7 +120,7 @@ const login = async (req, res, next) => {
         data: token,
       });
     } else {
-      next(new ApiError(" Wrong Email Or Password", 400));
+      next(new ApiError(" Wrong Email Or Password", 401));
       return;
     }
   } catch (err) {

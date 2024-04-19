@@ -5,20 +5,30 @@ const carController = require("../controllers/carController");
 const authenticate = require("../middlewares/authenticate");
 const checkSuperAdmin = require("../middlewares/superAdminCheck");
 
-router
-  .route("/")
-  .get(authenticate, carController.getAllCar)
-  .post(authenticate, upload.single("image"), carController.createCar);
+router.get("/", authenticate, carController.getAllCar);
 
-router
-  .route("/:id")
-  .get(authenticate, carController.getCarById)
-  .delete(authenticate, checkSuperAdmin, carController.deleteCar)
-  .patch(
-    authenticate,
-    checkSuperAdmin,
-    upload.single("image"),
-    carController.updateCar
-  );
+router.post(
+  "/create",
+  authenticate,
+  upload.single("image"),
+  carController.createCar
+);
+
+router.patch(
+  "/edit/:id",
+  authenticate,
+  checkSuperAdmin,
+  upload.single("image"),
+  carController.updateCar
+);
+
+router.get("/:id", authenticate, carController.getCarById);
+
+router.delete(
+  "/delete/:id",
+  authenticate,
+  checkSuperAdmin,
+  carController.deleteCar
+);
 
 module.exports = router;

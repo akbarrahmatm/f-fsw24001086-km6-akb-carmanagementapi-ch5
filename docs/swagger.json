@@ -1,0 +1,1015 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge FSW 1 Chapter 5",
+    "description": "This is Akbar Rahmat Mulyatama challenge 5, that provide Auth and Car API",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auths",
+      "description": "this API is for AUTHS resources"
+    },
+    {
+      "name": "Cars",
+      "description": "this API is for CARS resources"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auths"],
+        "summary": "Return hit result API login user",
+        "description": "ini API utk login user",
+        "requestBody": {
+          "description": "This endpoint is for login user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "akbarrahmatmulyatama@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "akbarganteng"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token successfully created"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJha2JhcnJhaG1hdG11bHlhdGFtYUBnbWFpbC5jb20iLCJuYW1lIjoiQWtiYXIgUmFobWF0IE11bHlhdGFtYSIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzEzNTEzNDgyLCJleHAiOjE3MTQxMTgyODJ9.zbwVPN-qFdYaRjAe0lCWJ36ZGRxLZJavfgipyFj4ew8"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Wrong Email Or Password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email or password is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "email & password is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Auths"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hit result API register member",
+        "description": "This endpoint is for register member",
+        "requestBody": {
+          "description": "This is request body for register member",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "staffbaru@staff.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Staff Baru"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "example": 23
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jakarta Selatan"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "staff"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Register account success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "id": 7,
+                        "name": "Staff Baru",
+                        "age": 23,
+                        "address": "Jakarta Selatan",
+                        "role": "staff",
+                        "updatedAt": "2024-04-19T07:27:40.804Z",
+                        "createdAt": "2024-04-19T07:27:40.804Z",
+                        "email": "staffbaru@staff.com",
+                        "password": "$2b$10$Kkt8udDIG3pQUB0z4RQCD.Ar2ceaFY0woFCEPDwHA/vUVvXm621uq"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "email, password, confirmPassword, name, age, address, role is not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "Email, password, confirmPassword, name, age, address, role is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "email is already exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email is already taken"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "password length error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password should be 8 character or more"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "password & confirmPassword match error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "password & confirmPassword does not match"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auths"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return userdata result from API checktoken user",
+        "description": "This endpoint is for check user token and return user data",
+        "responses": {
+          "200": {
+            "description": "Success : checktoken user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "user": {
+                          "id": 1,
+                          "name": "Akbar Rahmat Mulyatama",
+                          "age": 21,
+                          "address": "Jakarta Selatan",
+                          "role": "superadmin",
+                          "createdAt": "2024-04-17T09:24:49.325Z",
+                          "updatedAt": "2024-04-17T09:24:49.325Z",
+                          "Auth": {
+                            "id": 1,
+                            "email": "akbarrahmatmulyatama@gmail.com",
+                            "password": "$2b$10$R9froY.iZTxGz7Hb.X/Opur6EZjbX0XkLI3TVn77.wWSzWB.xyRvK",
+                            "userId": 1,
+                            "createdAt": "2024-04-17T09:24:49.339Z",
+                            "updatedAt": "2024-04-17T09:24:49.339Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error : Token not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "object",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Token not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "object",
+                      "example": "invalid signature"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/create": {
+      "post": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hasil hit API create cars",
+        "description": "ini API utk create car",
+        "requestBody": {
+          "description": "ini request body utk sukses car",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "SUV"
+                  },
+                  "model": {
+                    "type": "string",
+                    "example": "Omoda"
+                  },
+                  "manufacture": {
+                    "type": "string",
+                    "example": "Cherry"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 300000.0
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "id": 12,
+                        "type": "SUV",
+                        "model": "Omoda",
+                        "manufacture": "Cherry",
+                        "price": "300000.00",
+                        "createdBy": 6,
+                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713514529728_XTxU0SGZz.jpeg",
+                        "updatedAt": "2024-04-19T08:15:32.757Z",
+                        "createdAt": "2024-04-19T08:15:32.757Z",
+                        "deletedBy": null,
+                        "lastUpdatedBy": null,
+                        "deletedAt": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "type, model, manufacture, price, and image is not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "type, model, manufacture, price, and image is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars": {
+      "get": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hit result API get all cars",
+        "description": "This endpoint is for retrieve all cars data",
+        "responses": {
+          "200": {
+            "description": "Success get all data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "requestAt": {
+                      "type": "string",
+                      "example": "2024-04-19T08:04:47.462Z"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "0": {
+                          "id": 2,
+                          "type": "SUV",
+                          "model": "Fortuner",
+                          "manufacture": "Toyota",
+                          "price": "500000.00",
+                          "image": "default-car.jpg",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": null,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T07:13:16.252Z",
+                          "updatedAt": "2024-04-17T07:13:16.252Z",
+                          "createdByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          },
+                          "deletedByUser": null,
+                          "updatedByUser": null
+                        },
+                        "1": {
+                          "id": 3,
+                          "type": "Sport",
+                          "model": "Aventador",
+                          "manufacture": "Lamborghini",
+                          "price": "50000000.00",
+                          "image": "default-car.jpg",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": null,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T07:13:16.252Z",
+                          "updatedAt": "2024-04-17T07:13:16.252Z",
+                          "createdByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          },
+                          "deletedByUser": null,
+                          "updatedByUser": null
+                        },
+                        "2": {
+                          "id": 4,
+                          "type": "SUV",
+                          "model": "Rush",
+                          "manufacture": "Toyota",
+                          "price": "250000.00",
+                          "image": "default-car.jpg",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": null,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T07:13:16.252Z",
+                          "updatedAt": "2024-04-17T07:13:16.252Z",
+                          "createdByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          },
+                          "deletedByUser": null,
+                          "updatedByUser": null
+                        },
+                        "3": {
+                          "id": 5,
+                          "type": "SUV",
+                          "model": "Avanza",
+                          "manufacture": "Toyota",
+                          "price": "250000.00",
+                          "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713340960873_u3NYdimvc.png",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": null,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T08:02:43.871Z",
+                          "updatedAt": "2024-04-17T08:02:43.871Z",
+                          "createdByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          },
+                          "deletedByUser": null,
+                          "updatedByUser": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error : Token not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "object",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6
+            },
+            "description": "Car ID"
+          }
+        ],
+        "summary": "Return hit result API get car by id",
+        "description": "This endpoint is for get car by id",
+        "responses": {
+          "201": {
+            "description": "Car successfully retrieved by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "requestAt": {
+                      "type": "string",
+                      "example": "2024-04-19T08:04:47.462Z"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "id": 6,
+                        "type": "SUV",
+                        "model": "Xenia Balap",
+                        "manufacture": "Daihatsu",
+                        "price": "500000.00",
+                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
+                        "createdBy": 1,
+                        "deletedBy": null,
+                        "lastUpdatedBy": 1,
+                        "deletedAt": null,
+                        "createdAt": "2024-04-17T08:05:43.776Z",
+                        "updatedAt": "2024-04-19T08:31:33.337Z",
+                        "createdByUser": {
+                          "id": 1,
+                          "name": "Akbar Rahmat Mulyatama",
+                          "role": "superadmin"
+                        },
+                        "deletedByUser": null,
+                        "updatedByUser": {
+                          "id": 1,
+                          "name": "Akbar Rahmat Mulyatama",
+                          "role": "superadmin"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car is not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Data with id '999' is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/edit/{id}": {
+      "patch": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return hit result API edit car by id",
+        "description": "This endpoint is for editing car data by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6
+            },
+            "description": "ID of the car"
+          }
+        ],
+        "requestBody": {
+          "description": "ini request body utk sukses car",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "SUV"
+                  },
+                  "model": {
+                    "type": "string",
+                    "example": "Xenia Balap"
+                  },
+                  "manufacture": {
+                    "type": "string",
+                    "example": "Daihatsu"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 500000
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car successfully edited by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "id": 6,
+                        "type": "SUV",
+                        "model": "Xenia Balap",
+                        "manufacture": "Daihatsu",
+                        "price": "500000.00",
+                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
+                        "createdBy": 1,
+                        "deletedBy": null,
+                        "lastUpdatedBy": 1,
+                        "deletedAt": null,
+                        "createdAt": "2024-04-17T08:05:43.776Z",
+                        "updatedAt": "2024-04-19T08:31:33.337Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Forbidden!, you're not superadmin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car is not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Data with id '999' is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/delete/{id}": {
+      "delete": {
+        "tags": ["Cars"],
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ],
+        "summary": "Return result hit API delete car by id",
+        "description": "This endpoint is for deleting car by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 12
+            },
+            "description": "Car id"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Car successfully deleted by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car with id '12' is successfully deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Forbidden!, you're not superadmin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car is not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Data with id '999' is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

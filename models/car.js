@@ -20,14 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         as: "updatedByUser",
         foreignKey: {
           name: "lastUpdatedBy",
-          allowNull: false,
         },
       });
       Car.belongsTo(models.User, {
         as: "deletedByUser",
         foreignKey: {
           name: "deletedBy",
-          allowNull: false,
         },
       });
     }
