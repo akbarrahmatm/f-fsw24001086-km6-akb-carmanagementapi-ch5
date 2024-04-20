@@ -21,13 +21,12 @@ const register = async (req, res, next) => {
       !address ||
       !role
     ) {
-      next(
+      return next(
         new ApiError(
           "Email, password, confirmPassword, name, age, address, role is required",
           400
         )
       );
-      return;
     }
 
     // Check unique email
@@ -37,20 +36,19 @@ const register = async (req, res, next) => {
       },
     });
     if (isEmailExist) {
-      next(new ApiError("Email is already taken", 409));
-      return;
+      return next(new ApiError("Email is already taken", 409));
     }
 
     // Check password length
     if (password.length <= 8) {
-      next(new ApiError("Password should be 8 character or more", 422));
-      return;
+      return next(new ApiError("Password should be 8 character or more", 422));
     }
 
     // Check password & passwordConfirm
     if (password !== confirmPassword) {
-      next(new ApiError("password & confirmPassword does not match", 401));
-      return;
+      return next(
+        new ApiError("password & confirmPassword does not match", 401)
+      );
     }
 
     // Encrypt
@@ -72,15 +70,10 @@ const register = async (req, res, next) => {
 
     res.status(201).json({
       status: "Success",
-      data: {
-        ...newUser.dataValues,
-        email,
-        password: hashedPassword,
-      },
+      message: "User successfully registered",
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -89,8 +82,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      next(new ApiError("email & password is required", 400));
-      return;
+      return next(new ApiError("email & password is required", 400));
     }
 
     const user = await Auth.findOne({
@@ -116,16 +108,14 @@ const login = async (req, res, next) => {
 
       res.status(200).json({
         status: "Success",
-        message: "Token successfully created",
+        message: "Succesfully logged in",
         data: token,
       });
     } else {
-      next(new ApiError(" Wrong Email Or Password", 401));
-      return;
+      return next(new ApiError("Wrong Email Or Password", 401));
     }
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -138,8 +128,7 @@ const userCheck = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 500));
-    return;
+    return next(new ApiError(err.message, 500));
   }
 };
 

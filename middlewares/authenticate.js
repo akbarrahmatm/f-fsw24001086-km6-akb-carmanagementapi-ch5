@@ -7,8 +7,7 @@ module.exports = async (req, res, next) => {
     const bearerToken = req.headers.authorization;
 
     if (!bearerToken) {
-      next(new ApiError("Token not found!", 401));
-      return;
+      return next(new ApiError("Token not found!", 401));
     }
 
     const token = bearerToken.split("Bearer ")[1];
@@ -22,7 +21,6 @@ module.exports = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    next(new ApiError(err.message, 500));
-    return;
+    return next(new ApiError(err.message, 500));
   }
 };

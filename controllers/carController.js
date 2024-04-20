@@ -5,14 +5,38 @@ const { Op } = require("sequelize");
 
 const getAllCar = async (req, res, next) => {
   try {
+    const { carName, createdBy, manufacture, type, page, limit } = req.query;
+
+    const condition = {};
+
+    // Filter by carName
+    if (carName) condition.model = { [Op.iLike]: `%${carName}%` };
+
+    // Filter by createdBy
+    if (createdBy) condition.createdBy = createdBy;
+
+    // Filter by manufacture
+    if (manufacture) condition.manufacture = { [Op.iLike]: `${manufacture}%` };
+
+    // Filter by type
+    if (type) condition.type = { [Op.iLike]: `%${type}%` };
+
+    const pageNum = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 10;
+    const offset = (pageNum - 1) * pageSize;
+
+    const totalCount = await Car.count({ where: condition });
+
     const cars = await Car.findAll({
+      where: condition,
+      limit: pageSize,
+      offset: offset,
       include: [
         {
           model: User,
           as: "createdByUser",
           attributes: ["id", "name", "role"],
         },
-
         {
           model: User,
           as: "deletedByUser",
@@ -26,14 +50,22 @@ const getAllCar = async (req, res, next) => {
       ],
     });
 
+    const totalPages = Math.ceil(totalCount / pageSize);
+
     return res.status(200).json({
       status: "Success",
+      totalData: cars.length,
       requestAt: req.requestTime,
-      data: { ...cars },
+      data: cars,
+      pagination: {
+        totalData: totalCount,
+        totalPages,
+        pageNum,
+        pageSize,
+      },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -66,8 +98,7 @@ const getCarById = async (req, res, next) => {
     });
 
     if (!car) {
-      next(new ApiError(`Data with id '${id}' is not found`, 404));
-      return;
+      return next(new ApiError(`Data with id '${id}' is not found`, 404));
     }
 
     res.status(200).json({
@@ -76,8 +107,7 @@ const getCarById = async (req, res, next) => {
       data: car,
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -89,13 +119,12 @@ const createCar = async (req, res, next) => {
     let newCar;
 
     if (!type || !model || !manufacture || !price || !file) {
-      next(
+      return next(
         new ApiError(
           "type, model, manufacture, price, and image is required",
           400
         )
       );
-      return;
     }
 
     if (file !== null) {
@@ -130,8 +159,7 @@ const createCar = async (req, res, next) => {
       data: { ...newCar.dataValues },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -139,7 +167,7 @@ const deleteCar = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    // Find Car
+    // Contoh Implementasi
     const car = await Car.findOne({
       where: {
         id,
@@ -147,8 +175,7 @@ const deleteCar = async (req, res, next) => {
     });
 
     if (!car) {
-      next(new ApiError(`Data with id '${id}' is not found`, 404));
-      return;
+      return next(new ApiError(`Data with id '${id}' is not found`, 404));
     }
 
     const deletedBy = req.user.id;
@@ -175,8 +202,7 @@ const deleteCar = async (req, res, next) => {
       message: `Car with id '${car.id}' is successfully deleted`,
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 
@@ -198,8 +224,7 @@ const updateCar = async (req, res, next) => {
     });
 
     if (!car) {
-      next(new ApiError(`Data with id '${id}' is not found`, 404));
-      return;
+      return next(new ApiError(`Data with id '${id}' is not found`, 404));
     }
 
     if (file !== null) {
@@ -243,7 +268,7 @@ const updateCar = async (req, res, next) => {
       );
     }
 
-    const updatedCar = await Car.findOne({
+    await Car.findOne({
       where: {
         id,
       },
@@ -251,11 +276,10 @@ const updateCar = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      data: updatedCar,
+      message: "Car Successfully Updated",
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
-    return;
+    return next(new ApiError(err.message, 400));
   }
 };
 

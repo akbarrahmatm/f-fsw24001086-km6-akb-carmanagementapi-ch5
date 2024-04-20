@@ -22,6 +22,7 @@ router.patch(
   carController.updateCar
 );
 
+// Contoh Implementasi
 router.get("/:id", authenticate, carController.getCarById);
 
 router.delete(
