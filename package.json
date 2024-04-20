@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "db-create": "sequelize db:create",
+    "db-drop": "sequelize db:drop",
+    "db-migrate": "sequelize db:migrate",
+    "db-undo-migrate": "sequelize db:migrate:undo:all",
+    "db-seed": "sequelize db:seed:all",
+    "db-undo-seed": "sequelize db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",

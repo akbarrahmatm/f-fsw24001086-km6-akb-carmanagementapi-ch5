@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const { Auth, User } = require("../models");
 const ApiError = require("../utils/ApiError");
 const jwt = require("jsonwebtoken");
