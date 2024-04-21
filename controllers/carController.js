@@ -54,9 +54,9 @@ const getAllCar = async (req, res, next) => {
 
     return res.status(200).json({
       status: "Success",
-      totalData: cars.length,
+      message: "Cars succesfully retrieved",
       requestAt: req.requestTime,
-      data: cars,
+      data: { cars },
       pagination: {
         totalData: totalCount,
         totalPages,
@@ -103,8 +103,9 @@ const getCarById = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
+      message: `Car with id '${id}' is successfully retrieved`,
       requestAt: req.requestTime,
-      data: car,
+      data: { car },
     });
   } catch (err) {
     return next(new ApiError(err.message, 400));
@@ -156,7 +157,9 @@ const createCar = async (req, res, next) => {
 
     res.status(201).json({
       status: "Success",
-      data: { ...newCar.dataValues },
+      message: "Car successfully created",
+      requestAt: req.requestTime,
+      data: { newCar },
     });
   } catch (err) {
     return next(new ApiError(err.message, 400));
@@ -200,6 +203,7 @@ const deleteCar = async (req, res, next) => {
     res.status(200).json({
       status: "Success",
       message: `Car with id '${car.id}' is successfully deleted`,
+      requestAt: req.requestTime,
     });
   } catch (err) {
     return next(new ApiError(err.message, 400));
@@ -268,7 +272,7 @@ const updateCar = async (req, res, next) => {
       );
     }
 
-    await Car.findOne({
+    const updatedCar = await Car.findOne({
       where: {
         id,
       },
@@ -276,7 +280,9 @@ const updateCar = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      message: "Car Successfully Updated",
+      message: "Car successfully updated",
+      requestAt: req.requestTime,
+      data: { updatedCar },
     });
   } catch (err) {
     return next(new ApiError(err.message, 400));

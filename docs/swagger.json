@@ -424,21 +424,31 @@
                       "type": "string",
                       "example": "Success"
                     },
+                    "message": {
+                      "type": "string",
+                      "example": "Car  successfully created"
+                    },
+                    "requestAt": {
+                      "type": "string",
+                      "example": "2024-04-21T10:20:00.201Z"
+                    },
                     "data": {
                       "type": "object",
                       "example": {
-                        "id": 12,
-                        "type": "SUV",
-                        "model": "Omoda",
-                        "manufacture": "Cherry",
-                        "price": "300000.00",
-                        "createdBy": 6,
-                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713514529728_XTxU0SGZz.jpeg",
-                        "updatedAt": "2024-04-19T08:15:32.757Z",
-                        "createdAt": "2024-04-19T08:15:32.757Z",
-                        "deletedBy": null,
-                        "lastUpdatedBy": null,
-                        "deletedAt": null
+                        "newCar": {
+                          "id": 17,
+                          "type": "SUV",
+                          "model": "Omoda",
+                          "manufacture": "Cherry",
+                          "price": "300000.00",
+                          "createdBy": 6,
+                          "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713694800362_EXGlEM0j_.png",
+                          "updatedAt": "2024-04-21T10:20:03.585Z",
+                          "createdAt": "2024-04-21T10:20:03.585Z",
+                          "deletedBy": null,
+                          "lastUpdatedBy": null,
+                          "deletedAt": null
+                        }
                       }
                     }
                   }
@@ -511,6 +521,10 @@
                       "type": "string",
                       "example": "Success"
                     },
+                    "message": {
+                      "type": "string",
+                      "example": "Cars succesfully retrieved"
+                    },
                     "requestAt": {
                       "type": "string",
                       "example": "2024-04-19T08:04:47.462Z"
@@ -518,90 +532,210 @@
                     "data": {
                       "type": "object",
                       "example": {
-                        "0": {
-                          "id": 2,
-                          "type": "SUV",
-                          "model": "Fortuner",
-                          "manufacture": "Toyota",
-                          "price": "500000.00",
-                          "image": "default-car.jpg",
-                          "createdBy": 1,
-                          "deletedBy": null,
-                          "lastUpdatedBy": null,
-                          "deletedAt": null,
-                          "createdAt": "2024-04-17T07:13:16.252Z",
-                          "updatedAt": "2024-04-17T07:13:16.252Z",
-                          "createdByUser": {
-                            "id": 1,
-                            "name": "Akbar Rahmat Mulyatama",
-                            "role": "superadmin"
+                        "cars": [
+                          {
+                            "id": 2,
+                            "type": "SUV",
+                            "model": "Fortuner",
+                            "manufacture": "Toyota",
+                            "price": "500000.00",
+                            "image": "default-car.jpg",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T07:13:16.252Z",
+                            "updatedAt": "2024-04-17T07:13:16.252Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
                           },
-                          "deletedByUser": null,
-                          "updatedByUser": null
-                        },
-                        "1": {
-                          "id": 3,
-                          "type": "Sport",
-                          "model": "Aventador",
-                          "manufacture": "Lamborghini",
-                          "price": "50000000.00",
-                          "image": "default-car.jpg",
-                          "createdBy": 1,
-                          "deletedBy": null,
-                          "lastUpdatedBy": null,
-                          "deletedAt": null,
-                          "createdAt": "2024-04-17T07:13:16.252Z",
-                          "updatedAt": "2024-04-17T07:13:16.252Z",
-                          "createdByUser": {
-                            "id": 1,
-                            "name": "Akbar Rahmat Mulyatama",
-                            "role": "superadmin"
+                          {
+                            "id": 3,
+                            "type": "Sport",
+                            "model": "Aventador",
+                            "manufacture": "Lamborghini",
+                            "price": "50000000.00",
+                            "image": "default-car.jpg",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T07:13:16.252Z",
+                            "updatedAt": "2024-04-17T07:13:16.252Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
                           },
-                          "deletedByUser": null,
-                          "updatedByUser": null
-                        },
-                        "2": {
-                          "id": 4,
-                          "type": "SUV",
-                          "model": "Rush",
-                          "manufacture": "Toyota",
-                          "price": "250000.00",
-                          "image": "default-car.jpg",
-                          "createdBy": 1,
-                          "deletedBy": null,
-                          "lastUpdatedBy": null,
-                          "deletedAt": null,
-                          "createdAt": "2024-04-17T07:13:16.252Z",
-                          "updatedAt": "2024-04-17T07:13:16.252Z",
-                          "createdByUser": {
-                            "id": 1,
-                            "name": "Akbar Rahmat Mulyatama",
-                            "role": "superadmin"
+                          {
+                            "id": 4,
+                            "type": "SUV",
+                            "model": "Rush",
+                            "manufacture": "Toyota",
+                            "price": "250000.00",
+                            "image": "default-car.jpg",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T07:13:16.252Z",
+                            "updatedAt": "2024-04-17T07:13:16.252Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
                           },
-                          "deletedByUser": null,
-                          "updatedByUser": null
-                        },
-                        "3": {
-                          "id": 5,
-                          "type": "SUV",
-                          "model": "Avanza",
-                          "manufacture": "Toyota",
-                          "price": "250000.00",
-                          "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713340960873_u3NYdimvc.png",
-                          "createdBy": 1,
-                          "deletedBy": null,
-                          "lastUpdatedBy": null,
-                          "deletedAt": null,
-                          "createdAt": "2024-04-17T08:02:43.871Z",
-                          "updatedAt": "2024-04-17T08:02:43.871Z",
-                          "createdByUser": {
-                            "id": 1,
-                            "name": "Akbar Rahmat Mulyatama",
-                            "role": "superadmin"
+                          {
+                            "id": 5,
+                            "type": "SUV",
+                            "model": "Avanza",
+                            "manufacture": "Toyota",
+                            "price": "250000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713340960873_u3NYdimvc.png",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T08:02:43.871Z",
+                            "updatedAt": "2024-04-17T08:02:43.871Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
                           },
-                          "deletedByUser": null,
-                          "updatedByUser": null
-                        }
+                          {
+                            "id": 9,
+                            "type": "Electric Car",
+                            "model": "Air EV",
+                            "manufacture": "Wuling",
+                            "price": "250000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713344501231_ciyW_bhUD.jpeg",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T09:01:44.103Z",
+                            "updatedAt": "2024-04-17T09:01:44.103Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
+                          },
+                          {
+                            "id": 11,
+                            "type": "SUV",
+                            "model": "Omoda",
+                            "manufacture": "Cherry",
+                            "price": "300000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713348443382_pky28ngV1.jpg",
+                            "createdBy": 6,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T10:07:28.263Z",
+                            "updatedAt": "2024-04-17T10:07:28.263Z",
+                            "createdByUser": {
+                              "id": 6,
+                              "name": "Staff 100",
+                              "role": "staff"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
+                          },
+                          {
+                            "id": 14,
+                            "type": "SUV",
+                            "model": "Omoda",
+                            "manufacture": "Cherry",
+                            "price": "300000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713693910492_5gNs_r_TW.png",
+                            "createdBy": 6,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-21T10:05:13.527Z",
+                            "updatedAt": "2024-04-21T10:05:13.527Z",
+                            "createdByUser": {
+                              "id": 6,
+                              "name": "Staff 100",
+                              "role": "staff"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
+                          },
+                          {
+                            "id": 16,
+                            "type": "SUV",
+                            "model": "Omoda",
+                            "manufacture": "Cherry",
+                            "price": "300000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713694423163_nCCpMUj-0.png",
+                            "createdBy": 6,
+                            "deletedBy": null,
+                            "lastUpdatedBy": null,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-21T10:13:46.356Z",
+                            "updatedAt": "2024-04-21T10:13:46.356Z",
+                            "createdByUser": {
+                              "id": 6,
+                              "name": "Staff 100",
+                              "role": "staff"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": null
+                          },
+                          {
+                            "id": 6,
+                            "type": "SUV",
+                            "model": "Xenia Balap Mantap",
+                            "manufacture": "Daihatsu",
+                            "price": "500000.00",
+                            "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
+                            "createdBy": 1,
+                            "deletedBy": null,
+                            "lastUpdatedBy": 1,
+                            "deletedAt": null,
+                            "createdAt": "2024-04-17T08:05:43.776Z",
+                            "updatedAt": "2024-04-21T10:14:39.572Z",
+                            "createdByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            },
+                            "deletedByUser": null,
+                            "updatedByUser": {
+                              "id": 1,
+                              "name": "Akbar Rahmat Mulyatama",
+                              "role": "superadmin"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "example": {
+                        "totalData": 9,
+                        "totalPages": 1,
+                        "pageNum": 1,
+                        "pageSize": 10
                       }
                     }
                   }
@@ -666,6 +800,10 @@
                       "type": "string",
                       "example": "Success"
                     },
+                    "message": {
+                      "type": "string",
+                      "example": "Car with id '6' is successfully retrieved"
+                    },
                     "requestAt": {
                       "type": "string",
                       "example": "2024-04-19T08:04:47.462Z"
@@ -673,28 +811,30 @@
                     "data": {
                       "type": "object",
                       "example": {
-                        "id": 6,
-                        "type": "SUV",
-                        "model": "Xenia Balap",
-                        "manufacture": "Daihatsu",
-                        "price": "500000.00",
-                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
-                        "createdBy": 1,
-                        "deletedBy": null,
-                        "lastUpdatedBy": 1,
-                        "deletedAt": null,
-                        "createdAt": "2024-04-17T08:05:43.776Z",
-                        "updatedAt": "2024-04-19T08:31:33.337Z",
-                        "createdByUser": {
-                          "id": 1,
-                          "name": "Akbar Rahmat Mulyatama",
-                          "role": "superadmin"
-                        },
-                        "deletedByUser": null,
-                        "updatedByUser": {
-                          "id": 1,
-                          "name": "Akbar Rahmat Mulyatama",
-                          "role": "superadmin"
+                        "car": {
+                          "id": 6,
+                          "type": "SUV",
+                          "model": "Xenia Balap Mantap",
+                          "manufacture": "Daihatsu",
+                          "price": "500000.00",
+                          "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": 1,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T08:05:43.776Z",
+                          "updatedAt": "2024-04-21T10:14:39.572Z",
+                          "createdByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          },
+                          "deletedByUser": null,
+                          "updatedByUser": {
+                            "id": 1,
+                            "name": "Akbar Rahmat Mulyatama",
+                            "role": "superadmin"
+                          }
                         }
                       }
                     }
@@ -812,21 +952,27 @@
                       "type": "string",
                       "example": "Success"
                     },
+                    "message": {
+                      "type": "string",
+                      "example": "Car Successfully Updated"
+                    },
                     "data": {
                       "type": "object",
                       "example": {
-                        "id": 6,
-                        "type": "SUV",
-                        "model": "Xenia Balap",
-                        "manufacture": "Daihatsu",
-                        "price": "500000.00",
-                        "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
-                        "createdBy": 1,
-                        "deletedBy": null,
-                        "lastUpdatedBy": 1,
-                        "deletedAt": null,
-                        "createdAt": "2024-04-17T08:05:43.776Z",
-                        "updatedAt": "2024-04-19T08:31:33.337Z"
+                        "updatedCar": {
+                          "id": 6,
+                          "type": "SUV",
+                          "model": "Xenia Balap Mantap",
+                          "manufacture": "Daihatsu",
+                          "price": "500000.00",
+                          "image": "https://ik.imagekit.io/iaqozxfxq/IMG-1713350071351_dkMBFJapi.png",
+                          "createdBy": 1,
+                          "deletedBy": null,
+                          "lastUpdatedBy": 1,
+                          "deletedAt": null,
+                          "createdAt": "2024-04-17T08:05:43.776Z",
+                          "updatedAt": "2024-04-21T10:14:39.572Z"
+                        }
                       }
                     }
                   }
@@ -934,6 +1080,10 @@
                     "message": {
                       "type": "string",
                       "example": "Car with id '12' is successfully deleted"
+                    },
+                    "requestAt": {
+                      "type": "string",
+                      "example": "2024-04-21T10:15:26.553Z"
                     }
                   }
                 }
