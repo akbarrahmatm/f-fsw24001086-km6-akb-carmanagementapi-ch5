@@ -8,8 +8,6 @@ const register = async (req, res, next) => {
     const { email, password, confirmPassword, name, age, address, role } =
       req.body;
 
-    console.log(req.body);
-
     if (
       !email ||
       !password ||
@@ -60,7 +58,7 @@ const register = async (req, res, next) => {
       role,
     });
 
-    const newAuth = await Auth.create({
+    await Auth.create({
       email,
       password: hashedPassword,
       userId: newUser.id,

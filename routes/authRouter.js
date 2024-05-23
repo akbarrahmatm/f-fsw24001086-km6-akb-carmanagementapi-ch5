@@ -6,8 +6,8 @@ const checkSuperAdmin = require("../middlewares/superAdminCheck");
 
 router.post(
   "/register",
-  authenticate,
-  checkSuperAdmin,
+  // authenticate,
+  // checkSuperAdmin,
   authController.register
 );
 
