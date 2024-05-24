@@ -1,7 +1,7 @@
 const { Auth, User } = require("../models");
 const ApiError = require("../utils/ApiError");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const register = async (req, res, next) => {
   try {
