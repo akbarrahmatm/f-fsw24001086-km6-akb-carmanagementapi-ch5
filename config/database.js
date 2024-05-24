@@ -1,6 +1,13 @@
 require("dotenv").config();
 const pg = require("pg");
 
+const pool = {
+  max: 5,
+  min: 0,
+  acquire: 30000,
+  idle: 10000,
+};
+
 module.exports = {
   development: {
     username: process.env.DB_USERNAME,
@@ -10,6 +17,7 @@ module.exports = {
     dialect: "postgres",
     dialectModule: pg,
     port: process.env.DB_PORT,
+    pool: pool,
   },
   production: {
     username: process.env.DB_USERNAME,
@@ -19,6 +27,7 @@ module.exports = {
     dialect: "postgres",
     dialectModule: pg,
     port: process.env.DB_PORT,
+    pool: pool,
   },
   test: {
     username: process.env.DB_USERNAME,
@@ -28,5 +37,6 @@ module.exports = {
     dialect: "postgres",
     dialectModule: pg,
     port: process.env.DB_PORT,
+    pool: pool,
   },
 };
